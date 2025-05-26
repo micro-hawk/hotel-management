@@ -1,0 +1,176 @@
+<div>
+  <app-navbar></app-navbar>
+  <div
+    class="container my-4"
+    style="
+      display: flex;
+      justify-content: center;
+    "
+  >
+    <div class="card" style="width: 100%;">
+      <div class="card-body">
+        <h4 class="card-title">{{ isUpdateMode ? 'Update Room Service' : 'Room Service' }}</h4>
+
+        <form (ngSubmit)="handleSubmit()">
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="guestName"
+        name="guestName" 
+        placeholder="Guest Name"
+        [(ngModel)]="guestName"
+        required
+      />
+      <label for="guestName">Guest Name</label>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div class="form-floating">
+      <input
+        type="number"
+        class="form-control"
+        id="roomNumber"
+        name="roomNumber" 
+        placeholder="Room Number"
+        [(ngModel)]="roomNumber"
+        required
+      />
+      <label for="roomNumber">Room Number</label>
+    </div>
+  </div>
+
+  <!-- Fix for Ordered Items -->
+  <div class="mb-3">
+    <label class="form-label">Ordered Items</label>
+    <div *ngFor="let item of orderedItems; let i = index" class="row mb-2">
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Name"
+            name="itemName_{{i}}"  
+            [(ngModel)]="orderedItems[i].name"
+            (ngModelChange)="handleItemChange(i, 'name', $event)"
+            required
+          />
+          <label for="itemName_{{i}}">Name</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Description"
+            name="itemDescription_{{i}}"  
+            [(ngModel)]="orderedItems[i].description"
+            (ngModelChange)="handleItemChange(i, 'description', $event)"
+            required
+          />
+          <label for="itemDescription_{{i}}">Description</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Quantity"
+            name="itemQuantity_{{i}}"
+            min="1"
+            [(ngModel)]="orderedItems[i].quantity"
+            (ngModelChange)="handleItemChange(i, 'quantity', $event)"
+            required
+          />
+          <label for="itemQuantity_{{i}}">Quantity</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="number"
+            step="0.01"
+            class="form-control"
+            placeholder="Price"
+            name="itemPrice_{{i}}" 
+            min="0"
+            [(ngModel)]="orderedItems[i].price"
+            (ngModelChange)="handleItemChange(i, 'price', $event)"
+            required
+          />
+          <label for="itemPrice_{{i}}">Price</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    {{ isUpdateMode ? 'Update' : 'Submit' }}
+  </button>
+</form>
+
+        <div class="mt-4">
+          <h5> Active Room Services</h5>
+          <div class="mb-3">
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Enter Room Number"
+                [(ngModel)]="roomNumberSearch"
+              />
+              <button
+                class="btn btn-primary ms-2"
+                style="width: 150px;"
+                (click)="handleRoomNumberSearch()"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Guest Name</th>
+                <th>Room Number</th>
+                <th>Ordered Items</th>
+                <th>Completed</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let service of roomServices; let i = index">
+                <td>{{ service.guestName }}</td>
+                <td>{{ service.roomNumber }}</td>
+                <td>
+                  <ol>
+                    <li *ngFor="let item of service.orderedItems">
+                      Name: {{ item.name }}, Description: {{ item.description }}, Quantity:
+                      {{ item.quantity }}, Price: {{ item.price }}
+                    </li>
+                  </ol>
+                </td>
+                <td>{{ service.completed ? 'Yes' : 'No' }}</td>
+                <td>
+                  <button
+                    *ngIf="service.id !== undefined"
+                    class="btn btn-primary btn-sm me-2"
+                    (click)="handleUpdate(service.id, service)"
+                  >
+                    Update
+                  </button>
+                  <button *ngIf="service.id !== undefined" class="btn btn-danger btn-sm" (click)="handleDelete(service.id)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

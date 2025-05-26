@@ -1,0 +1,54 @@
+<div>
+  <div style="max-width: 600px; margin: 0 auto;"></div>
+  <div class="container d-flex align-items-center justify-content-center flex-wrap">
+    <div class="box">
+      <div class="body">
+        <div class="imgContainer">
+          <img src="https://shorturl.at/ltDN2" alt="" />
+        </div>
+        <div class="content d-flex flex-column align-items-center justify-content-center">
+          <div>
+            <h3 class="text-white fs-5">Total Sales</h3>
+            <p class="fs-6 text-white">{{ data.revenue | number: '1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="body">
+        <div class="imgContainer">
+          <img src="https://shorturl.at/jHKO7" alt="" />
+        </div>
+        <div class="content d-flex flex-column align-items-center justify-content-center">
+          <div>
+            <h3 class="text-white fs-5">Total Reservation</h3>
+            <p class="fs-6 text-white">{{ data.reservations }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="days"
+            name="days"
+            [(ngModel)]="days"
+            placeholder="Enter Days"
+            required
+          />
+          <label htmlFor="noOfDays">Enter Days</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-primary" (click)="handleFetchReport()">
+          Fetch Report
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<div
+  style="
+    background: url('https://shorturl.at/axLN1') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+  "
+>
+  <app-navbar></app-navbar>
+  <h1>Inventory Staff</h1>
+  <div
+    class="card-container"
+    style="
+      width: 80%;
+      margin: 0 auto;
+    "
+  >
+    <div
+      class="card"
+      style="
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        opacity: 0.9;
+      "
+    >
+      <div class="card-body">
+        <h2 class="card-title text-center">
+          {{ isUpdating ? "Update Staff" : "Add Staff" }}
+        </h2>
+        <form (ngSubmit)="handleSubmit(staffForm)" #staffForm="ngForm">
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Enter name"
+              [(ngModel)]="name"
+              required
+              #nameInput="ngModel"
+            />
+            <label htmlFor="name">Name</label>
+            <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="text-danger">
+              Name is required.
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Enter email"
+              [(ngModel)]="email"
+              required
+              #emailInput="ngModel"
+            />
+            <label htmlFor="email">Email</label>
+            <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="text-danger">
+              Email is required.
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="position"
+              name="position"
+              placeholder="Enter position"
+              [(ngModel)]="position"
+              required
+              #positionInput="ngModel"
+            />
+            <label htmlFor="position">Position</label>
+            <div *ngIf="positionInput.invalid && (positionInput.dirty || positionInput.touched)" class="text-danger">
+              Position is required.
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="number"
+              class="form-control"
+              id="departmentId"
+              name="departmentId"
+              placeholder="Enter department ID"
+              [(ngModel)]="departmentId"
+              required
+              min="1"
+              #departmentIdInput="ngModel"
+            />
+            <label htmlFor="departmentId">Department ID</label>
+            <div *ngIf="departmentIdInput.invalid && (departmentIdInput.dirty || departmentIdInput.touched)" class="text-danger">
+              Department ID is required and must be at least 1.
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="contactNumber"
+              name="contactNumber"
+              placeholder="Enter contact number"
+              [(ngModel)]="contactNumber"
+              required
+              pattern="[0-9]{10}"
+              #contactNumberInput="ngModel"
+            />
+            <label htmlFor="contactNumber">Contact Number</label>
+            <div *ngIf="contactNumberInput.invalid && (contactNumberInput.dirty || contactNumberInput.touched)">
+              <div *ngIf="contactNumberInput.errors?.['required']" class="text-danger">Contact number is required.</div>
+              <div *ngIf="contactNumberInput.errors?.['pattern']" class="text-danger">Enter a 10-digit contact number.</div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea
+              class="form-control"
+              id="workDescription"
+              name="workDescription"
+              placeholder="Enter work description"
+              rows="3"
+              [(ngModel)]="workDescription"
+              required
+              #workDescriptionInput="ngModel"
+            ></textarea>
+            <label htmlFor="workDescription">Work Description</label>
+            <div *ngIf="workDescriptionInput.invalid && (workDescriptionInput.dirty || workDescriptionInput.touched)" class="text-danger">
+              Work description is required.
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            {{ isUpdating ? "Update" : "Submit" }}
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="card-title">STAFF</h3>
+        <app-table
+          [items]="staffs"
+          [onDelete]="handleDelete.bind(this)"
+          [onUpdate]="handleUpdate.bind(this)"
+        ></app-table>
+      </div>
+    </div>
+  </div>
+</div>

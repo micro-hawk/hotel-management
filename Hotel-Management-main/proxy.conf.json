@@ -1,0 +1,27 @@
+{
+    "/inventory": {
+      "target": "http://localhost:8002",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/inventory": "/inventory"
+      }
+    },
+    "/room": {
+      "target": "http://localhost:8003",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/room": "/room"
+      }
+    },
+    "/": {
+      "target": "http://localhost:4200",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "bypass": "/index.html"
+    }
+}

@@ -1,0 +1,188 @@
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  Sign up
+                </p>
+                <div *ngIf="isFormSubmitted" class="alert alert-success" role="alert">
+                  {{ response?.message || 'Registration successful!' }}
+                </div>
+                <div *ngIf="isError" class="alert alert-danger" role="alert">
+                 
+                  {{ response?.message || 'Failed to submit the form. Please try again.' }}
+                </div>
+
+                <form class="mx-1 mx-md-4" (ngSubmit)="handleSubmit(registrationForm)" #registrationForm="ngForm">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="form-control"
+                        placeholder="Username"
+                        [(ngModel)]="formData.username"
+                        required
+                        #username="ngModel"
+                      />
+                      <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+                        <div *ngIf="username.errors?.['required']">
+                          Username is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Your Email"
+                        [(ngModel)]="formData.email"
+                        required
+                        email
+                        #email="ngModel"
+                      />
+                      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                        <div *ngIf="email.errors?.['required']">
+                          Email is required.
+                        </div>
+                        <div *ngIf="email.errors?.['email']">
+                          Invalid email format.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Password"
+                        [(ngModel)]="formData.password"
+                        required
+                        #password="ngModel"
+                      />
+                      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                        <div *ngIf="password.errors?.['required']">
+                          Password is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        class="form-control"
+                        placeholder="Confirm Password"
+                        [(ngModel)]="formData.confirmPassword"
+                        required
+                        #confirmPassword="ngModel"
+                      />
+                      <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="text-danger">
+                        <div *ngIf="confirmPassword.errors?.['required']">
+                          Confirm Password is required.
+                        </div>
+                      </div>
+                      <div *ngIf="formData.password !== formData.confirmPassword && confirmPassword.touched">
+                        <div class="text-danger">
+                          Passwords do not match.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-users fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <select
+                        class="form-select"
+                        id="role"
+                        name="role"
+                        aria-label="Role"
+                        [(ngModel)]="formData.role"
+                        required
+                        #role="ngModel"
+                      >
+                        <option value="">Select Role</option>
+                        <option value="ROLE_ADMIN">Admin</option>
+                        <option value="ROLE_MANAGER">Manager</option>
+                        <option value="ROLE_RECEPTION">Receptionist</option>
+                      </select>
+                      <div *ngIf="role.invalid && (role.dirty || role.touched)" class="text-danger">
+                        <div *ngIf="role.errors?.['required']">
+                          Role is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-check d-flex justify-content-center mb-5">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      value=""
+                      id="form2Example3c"
+                    />
+                    <label
+                      class="form-check-label"
+                      htmlFor="form2Example3"
+                    >
+                      I agree all statements in
+                      <a href="#!">Terms of service</a>
+                    </label>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg"
+                      [disabled]="registrationForm.invalid || formData.password !== formData.confirmPassword"
+                    >
+                      Register
+                    </button>
+                  </div>
+                  <div class="form-check d-flex justify-content-center mb-5">
+                    <label class="form-check-label">
+                      (Already have an account)
+                      <a routerLink="/" class="nav-link">
+                        Login Now
+                      </a>
+                    </label>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                <img
+                  src="https://tinyurl.com/3e5nwz5d"
+                  class="img-fluid"
+                  alt="Sample image"
+                  style="height: 50%; margin-bottom: 25%;"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

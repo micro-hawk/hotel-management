@@ -1,0 +1,69 @@
+<div class="my-4">
+  <div class="d-flex justify-content-center">
+    <div class="card shadow" style="width: 40%;">
+      <div class="card-body">
+        <h5 class="card-title">Bill Form</h5>
+        <form (ngSubmit)="handleSubmit(billForm)" #billForm="ngForm">
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="guestName"
+              name="guestName"
+              [(ngModel)]="billData.guestName"
+              placeholder="Guest Name"
+              required
+            />
+            <label htmlFor="guestName">Guest Name</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="number"
+              class="form-control"
+              id="phoneNumber"
+              name="phoneNumber"
+              pattern="[0-9]{10}"
+              [(ngModel)]="billData.phoneNumber"
+              placeholder="Phone Number"
+              required
+              #phoneNumber="ngModel"
+            />
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+              <div *ngIf="phoneNumber.errors?.['required']" class="text-danger">
+                Phone number is required.
+              </div>
+              <div *ngIf="phoneNumber.errors?.['pattern']" class="text-danger">
+                Enter valid phone number (10 digits).
+              </div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+              type="number"
+              class="form-control"
+              id="roomNumber"
+              name="roomNumber"
+              [(ngModel)]="billData.roomNumber"
+              placeholder="Room Number"
+              required
+            />
+            <label htmlFor="roomNumber">Room Number</label>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="billForm.invalid">
+            Generate Bill
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <div class="card mt-4 shadow" style="min-width: 40%;">
+      <div class="card-body">
+        <h3 class="card-title">Bill Details</h3>
+        <app-table [config]="billTableConfig" [billTable]="true"></app-table>
+      </div>
+    </div>
+  </div>
+</div>
